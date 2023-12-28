@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String booksUrl = "";
-String todoUrl = "";
+String baseUrl = "https://coded-meditation.eapi.joincoded.com";
 
 class ApiClient {
   static final Dio dio = Dio(
-    BaseOptions(baseUrl: todoUrl),
+    BaseOptions(baseUrl: baseUrl),
   );
 
   static Future<void> addAuthToken() async {

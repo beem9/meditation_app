@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -83,6 +84,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 String username = _usernameController.text;
                 String email = _emailController.text;
                 // Use 'username', 'email', and '_image' as needed
+
+                GoRouter.of(context).pop();
               },
               child: Text('Sign Up'),
             ),

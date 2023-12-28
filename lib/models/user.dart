@@ -11,7 +11,7 @@ class User {
   User({
     required this.username,
     required this.password,
-    required this.picture,
+    this.picture,
   });
 
   User copyWith({
