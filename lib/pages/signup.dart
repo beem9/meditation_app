@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:meditation_app/models/user.dart';
+import 'package:meditation_app/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -11,10 +14,10 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   File? _image;
 
-  Future<void> _getImage() async {
+  Future<void> getImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
@@ -30,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose() {
     _usernameController.dispose();
-    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -47,7 +50,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             GestureDetector(
-              onTap: _getImage,
+              onTap: () {
+                getImage();
+              },
               child: CircleAvatar(
                 radius: 50,
                 backgroundImage: _image != null ? FileImage(_image!) : null,
@@ -69,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             SizedBox(height: 20),
             TextFormField(
-              controller: _emailController,
+              controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -77,15 +82,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Access the values from _usernameController.text, _emailController.text, and _image
-                // Perform sign-up logic here
-                // For example:
-                String username = _usernameController.text;
-                String email = _emailController.text;
-                // Use 'username', 'email', and '_image' as needed
-
-                GoRouter.of(context).pop();
+              onPressed: () async {
+                if (_image != null) {
+                  context
+                      .read<AuthProvider>()
+                      .signup(
+                        user: User(
+                          username: _usernameController.text,
+                          password: _passwordController.text,
+                          picture: _image,
+                        ),
+                      )
+                      .then((token) {
+                    if (token.isNotEmpty) {
+                      GoRouter.of(context).go("/signin");
+                    }
+                  });
+                } else {
+                  // Handle case where no image is selected
+                }
               },
               child: Text('Sign Up'),
             ),

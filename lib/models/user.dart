@@ -1,12 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
+import 'dart:io';
 
 class User {
   final String username;
   final String password;
-  final FormData? picture;
+  final File? picture;
 
   User({
     required this.username,
@@ -17,7 +15,7 @@ class User {
   User copyWith({
     String? username,
     String? password,
-    FormData? picture,
+    File? picture,
   }) {
     return User(
       username: username ?? this.username,
@@ -27,10 +25,11 @@ class User {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'username': username,
-      'password': password,
-      'picture': picture,
+    return {
+      "username": "$username",
+      "password": "$password",
+      // Handle picture here, convert File to something usable
+      "picture": picture != null ? picture!.path : null,
     };
   }
 
@@ -38,7 +37,8 @@ class User {
     return User(
       username: map['username'] as String,
       password: map['password'] as String,
-      picture: FormData.fromMap(map['picture'] as Map<String, dynamic>),
+      // Handle picture here, convert it back to a File
+      picture: map['picture'] != null ? File(map['picture'] as String) : null,
     );
   }
 
@@ -52,10 +52,11 @@ class User {
       'User(username: $username, password: $password, picture: $picture)';
 
   @override
-  bool operator ==(covariant User other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.username == username &&
+    return other is User &&
+        other.username == username &&
         other.password == password &&
         other.picture == picture;
   }
