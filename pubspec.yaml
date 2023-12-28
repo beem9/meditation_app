@@ -1,15 +1,16 @@
 name: meditation_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: ">=3.2.3 <4.0.0"
 
 dependencies:
   dio: ^5.4.0
   flutter:
     sdk: flutter
+  image_picker: ^1.0.5
   provider: ^6.1.1
   shared_preferences: ^2.2.2
 
