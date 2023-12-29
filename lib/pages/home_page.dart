@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/models/user.dart';
+import 'package:meditation_app/providers/auth_provider.dart';
+import 'package:meditation_app/widgets/grid.dart';
+import 'package:meditation_app/widgets/user_drawer.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({super.key});
@@ -11,28 +15,39 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   User user = User(username: '', password: '');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile Page'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                _showUserProfile(context, user);
-              },
-              child: CircleAvatar(
-                radius: 50,
-                //backgroundImage: user.picture as ImageProvider,
-              ),
-            ),
-          ],
-        ),
+      drawer: UserDrawer(
+          username: context.read<AuthProvider>().getUsernameFromToken()),
+      body: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, mainAxisSpacing: 10),
+        children: [
+          GridItem(
+              image:
+                  "https://img.freepik.com/premium-vector/boy-doing-art-design-monitor_118167-4637.jpg",
+              title: "Tips",
+              onTap: () {}),
+          GridItem(
+              image:
+                  "https://blog.undraw.co/static/39eddec534183724807a2c9017ecffa2/f3583/4-years-unDraw.png",
+              title: "Tips",
+              onTap: () {}),
+          GridItem(
+              image:
+                  "https://img.freepik.com/premium-vector/boy-doing-art-design-monitor_118167-4637.jpg",
+              title: "Tips",
+              onTap: () {}),
+          GridItem(
+              image:
+                  "https://img.freepik.com/premium-vector/boy-doing-art-design-monitor_118167-4637.jpg",
+              title: "Tips",
+              onTap: () {})
+        ],
       ),
     );
   }
@@ -55,7 +70,8 @@ void _showUserProfile(BuildContext context, User user) {
               ),
             ),
             SizedBox(height: 10),
-            Text('Username: ${user.username}'),
+            Text(
+                'Username: ${context.read<AuthProvider>().getUsernameFromToken()}'),
           ],
         ),
         actions: <Widget>[
