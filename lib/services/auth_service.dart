@@ -8,7 +8,15 @@ class AuthService {
     try {
       if (user.username.isNotEmpty && user.password.isNotEmpty) {
         final Response response =
-            await ApiClient.post("/signup", data: user.toJson());
+            await ApiClient.post("/signup", data: user.toJson()
+
+                // {
+                //   "username": "${user.username}",
+                //   "password": "${user.password}",
+                // "picture": MultipartFile.fromFile(user.picture!.path)
+                // }
+
+                );
         print(response.data);
         Token tokenModle = Token.fromJson(response.data);
         return tokenModle.token.toString();
@@ -25,6 +33,20 @@ class AuthService {
           await ApiClient.post("/signin", data: user.toJson());
       Token tokenModel = Token.fromJson(response.data);
       return tokenModel.token;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<User> getUserApi() async {
+    User placeholder = User(username: 'username', password: 'password');
+    try {
+      final responseValue = await ApiClient.get("/");
+      if (responseValue.statusCode == 200) {
+        final User user = User.fromJson(responseValue.data);
+        return user;
+      }
+      return placeholder;
     } catch (e) {
       throw e.toString();
     }

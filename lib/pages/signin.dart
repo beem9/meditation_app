@@ -45,8 +45,9 @@ class SignInScreen extends StatelessWidget {
                     .read<AuthProvider>()
                     .signin(
                         user: User(
-                            username: usernameController.text,
-                            password: passwordController.text))
+                      username: usernameController.text,
+                      password: passwordController.text,
+                    ))
                     .then((token) {
                   if (token.isNotEmpty) {
                     GoRouter.of(context).go("/home");
