@@ -28,7 +28,11 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisCount: 2, mainAxisSpacing: 10),
         children: [
           GridItem(
-              image: "assets/images/tips.png", title: "Tips", onTap: () {}),
+              image: "assets/images/tips.png",
+              title: "Tips",
+              onTap: () {
+                GoRouter.of(context).pushNamed('tips');
+              }),
           GridItem(
               image: "assets/images/videos.png",
               title: "Yoga videos",

@@ -27,6 +27,16 @@ class ApiClient {
     }
   }
 
+  static Future<Response> delete(String path) async {
+    await addAuthToken();
+    try {
+      print(dio.options.headers['Authorization'].toString());
+      return await dio.delete(path);
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
   static Future<Response> post(String path, {Object? data}) async {
     await addAuthToken();
     try {

@@ -11,8 +11,8 @@ class AuthProvider extends ChangeNotifier {
   User getUserFromToken() {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
 
-    // Assuming your username is stored in the 'username' claim
     User user = User(
+        id: decodedToken['id'],
         username: decodedToken['username'],
         imagePath: decodedToken['image'],
         exp: decodedToken['exp'],

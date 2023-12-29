@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:meditation_app/pages/home_page.dart';
 import 'package:meditation_app/pages/signin.dart';
 import 'package:meditation_app/pages/signup.dart';
+import 'package:meditation_app/pages/tips_page.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
+import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -12,7 +14,7 @@ void main() {
       create: (context) => AuthProvider(),
     ),
     ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
+      create: (context) => TipProvider(),
     ),
   ], child: MyApp()));
 }
@@ -43,9 +45,9 @@ class MyApp extends StatelessWidget {
       builder: (context, state) => MyHomePage(),
     ),
     GoRoute(
-      path: "/addNote",
-      name: "addNote",
-      builder: (context, state) => SignUpScreen(),
+      path: "/tips",
+      name: "tips",
+      builder: (context, state) => TipsScreen(),
     ),
     GoRoute(
       path: "/signup",
