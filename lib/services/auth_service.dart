@@ -37,4 +37,18 @@ class AuthService {
       throw e.toString();
     }
   }
+
+  Future<User> getUserApi() async {
+    User placeholder = User(username: 'username', password: 'password');
+    try {
+      final responseValue = await ApiClient.get("/");
+      if (responseValue.statusCode == 200) {
+        final User user = User.fromJson(responseValue.data);
+        return user;
+      }
+      return placeholder;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
