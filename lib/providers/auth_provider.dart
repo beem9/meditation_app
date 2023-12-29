@@ -8,6 +8,21 @@ class AuthProvider extends ChangeNotifier {
   final authService = AuthService();
   String token = "";
 
+  User getUserFromToken() {
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+    // Assuming your username is stored in the 'username' claim
+    User user = User(
+        username: decodedToken['username'],
+        imagePath: decodedToken['image'],
+        exp: decodedToken['exp'],
+        finishedExercises: decodedToken['finishedExercises'],
+        iat: decodedToken['iat']);
+    print(user.imagePath);
+
+    return user;
+  }
+
   Future<String> signup({required User user}) async {
     token = await authService.signup(user: user);
 

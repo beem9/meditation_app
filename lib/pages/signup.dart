@@ -75,8 +75,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             SizedBox(height: 20),
             TextFormField(
               controller: _passwordController,
+              obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Email',
+                labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -90,7 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         user: User(
                           username: _usernameController.text,
                           password: _passwordController.text,
-                          picture: _image,
+                          imagePath: _image.toString(),
                         ),
                       )
                       .then((token) {

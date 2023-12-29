@@ -22,67 +22,57 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Profile Page'),
       ),
       drawer: UserDrawer(
-          username: context.read<AuthProvider>().getUsernameFromToken()),
+          username: context.read<AuthProvider>().getUserFromToken().username),
       body: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, mainAxisSpacing: 10),
         children: [
           GridItem(
-              image:
-                  "https://img.freepik.com/premium-vector/boy-doing-art-design-monitor_118167-4637.jpg",
-              title: "Tips",
+              image: "assets/images/tips.png", title: "Tips", onTap: () {}),
+          GridItem(
+              image: "assets/images/videos.png",
+              title: "Yoga videos",
               onTap: () {}),
           GridItem(
-              image:
-                  "https://blog.undraw.co/static/39eddec534183724807a2c9017ecffa2/f3583/4-years-unDraw.png",
-              title: "Tips",
-              onTap: () {}),
+              image: "assets/images/music.png", title: "Music", onTap: () {}),
           GridItem(
-              image:
-                  "https://img.freepik.com/premium-vector/boy-doing-art-design-monitor_118167-4637.jpg",
-              title: "Tips",
-              onTap: () {}),
-          GridItem(
-              image:
-                  "https://img.freepik.com/premium-vector/boy-doing-art-design-monitor_118167-4637.jpg",
-              title: "Tips",
-              onTap: () {})
+              image: "assets/images/med.png", title: "Meditation", onTap: () {})
         ],
       ),
     );
   }
 }
 
-void _showUserProfile(BuildContext context, User user) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('User Details'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Center(
-              child: CircleAvatar(
-                radius: 50,
-                //backgroundImage: user.picture as ImageProvider,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-                'Username: ${context.read<AuthProvider>().getUsernameFromToken()}'),
-          ],
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Close'),
-          ),
-        ],
-      );
-    },
-  );
-}
+// void _showUserProfile(BuildContext context, User user) {
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: Text('User Details'),
+//         content: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: <Widget>[
+//             Center(
+//               child: CircleAvatar(
+//                 radius: 50,
+//                 //backgroundImage: user.picture as ImageProvider,
+//               ),
+//             ),
+//             SizedBox(height: 10),
+//             Text(
+//                 'Username: ${context.read<AuthProvider>().getUsernameFromToken()}'),
+//           ],
+//         ),
+//         actions: <Widget>[
+//           TextButton(
+//             onPressed: () {
+//               Navigator.of(context).pop();
+//             },
+//             child: Text('Close'),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }

@@ -6,7 +6,7 @@ import 'package:meditation_app/services/client.dart';
 class AuthService {
   Future<String> signup({required User user}) async {
     try {
-      if (user.username.isNotEmpty && user.password.isNotEmpty) {
+      if (user.username.isNotEmpty && user.password!.isNotEmpty) {
         final Response response =
             await ApiClient.post("/signup", data: user.toJson()
 

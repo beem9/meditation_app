@@ -15,7 +15,7 @@ class GridItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(image,
+            Image.asset(image,
                 height: 80,
                 width:
                     80), // You can replace this with your own way of loading images
