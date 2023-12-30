@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
               image: "assets/images/videos.png",
               title: "Yoga videos",
               onTap: () {
-                GoRouter.of(context).pushNamed('ptips');
+                GoRouter.of(context).pushNamed('exer');
               }),
           GridItem(
               image: "assets/images/music.png", title: "Music", onTap: () {}),

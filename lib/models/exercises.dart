@@ -29,12 +29,16 @@ class Exercises {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'title': title,
-      'file': file,
-      'finished': finished,
-    };
+    try {
+      return <String, dynamic>{
+        'id': id,
+        'title': title,
+        'file': file,
+        'finished': finished,
+      };
+    } catch (e) {
+      throw e.toString();
+    }
   }
 
   factory Exercises.fromMap(Map<String, dynamic> map) {

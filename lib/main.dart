@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_app/pages/exercise_page.dart';
 import 'package:meditation_app/pages/home_page.dart';
 import 'package:meditation_app/pages/personal_tips_page.dart';
 import 'package:meditation_app/pages/signin.dart';
 import 'package:meditation_app/pages/signup.dart';
 import 'package:meditation_app/pages/tips_page.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
+import 'package:meditation_app/providers/exercise_provider.dart';
 import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,9 @@ void main() {
     ),
     ChangeNotifierProvider(
       create: (context) => TipProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ExerciseProvider(),
     ),
   ], child: MyApp()));
 }
@@ -69,6 +74,11 @@ class MyApp extends StatelessWidget {
       path: "/signin",
       name: "signin",
       builder: (context, state) => SignInScreen(),
+    ),
+    GoRoute(
+      path: "/exer",
+      name: "exer",
+      builder: (context, state) => ExerciseScreen(),
     ),
   ]);
 }
