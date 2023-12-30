@@ -16,7 +16,7 @@ class _PersonalTipsScreenState extends State<PersonalTipsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Tips"),
+        title: Text("My Tips"),
         actions: [
           IconButton(
             onPressed: () {
