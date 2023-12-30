@@ -21,4 +21,14 @@ class TipProvider extends ChangeNotifier {
     await _tipService.deleteTipApi(id);
     await tipList();
   }
+
+  Future<void> upVouteTip(int id) async {
+    await _tipService.upVoteApi(id);
+    await tipList();
+  }
+
+  Future<void> downVoteTip(int id) async {
+    await _tipService.downVoteApi(id);
+    await tipList();
+  }
 }

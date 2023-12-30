@@ -37,4 +37,22 @@ class Tipservice {
       throw "Error";
     }
   }
+
+  Future<List<Tips>> upVoteApi(int id) async {
+    try {
+      final Response response = await ApiClient.put("/tips/$id/upvote");
+      return response.data;
+    } catch (e) {
+      throw "Error";
+    }
+  }
+
+  Future<List<Tips>> downVoteApi(int id) async {
+    try {
+      final Response response = await ApiClient.put("/tips/$id/downvote");
+      return response.data;
+    } catch (e) {
+      throw "Error";
+    }
+  }
 }
