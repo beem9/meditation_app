@@ -37,11 +37,24 @@ class _TipsScreenState extends State<TipsScreen> {
       body: FutureBuilder(
         future: context.read<TipProvider>().tipList(),
         builder: (context, snapshot) {
+          int likes = 1;
           return Consumer<TipProvider>(
             builder: (context, value, child) => ListView.builder(
               itemCount: value.tipsList.length,
               itemBuilder: (context, index) {
-                context.read<TipProvider>().tipList();
+                final upvotesCount = context
+                        .watch<TipProvider>()
+                        .tipsList[index]
+                        .upvotes
+                        ?.length ??
+                    0;
+                final downvotesCount = context
+                        .watch<TipProvider>()
+                        .tipsList[index]
+                        .downvotes
+                        ?.length ??
+                    0;
+                dynamic totalVotes = upvotesCount - downvotesCount;
 
                 return Card(
                   child: Padding(
@@ -80,10 +93,12 @@ class _TipsScreenState extends State<TipsScreen> {
                                     context
                                         .read<TipProvider>()
                                         .upVouteTip(value.tipsList[index].id!);
+                                    context.read<TipProvider>().tipList();
                                   },
                                 ),
                                 Text(
-                                  ""
+                                  "${totalVotes}"
+
                                   //            value.tipsList[index].upvotes.length.toString(),
 
                                   , // Replace this with the actual vote count
@@ -95,6 +110,7 @@ class _TipsScreenState extends State<TipsScreen> {
                                     context
                                         .read<TipProvider>()
                                         .downVoteTip(value.tipsList[index].id!);
+                                    context.read<TipProvider>().tipList();
                                     // Downvote logic
                                   },
                                 ),
@@ -122,5 +138,12 @@ class _TipsScreenState extends State<TipsScreen> {
         },
       ),
     );
+  }
+
+  likes(int ups, int down, index) {
+    int like = TipProvider().tipsList[index].upvotes!.length;
+    int dislikes = TipProvider().tipsList[index].downvotes!.length;
+    int total = like - dislikes;
+    return total;
   }
 }
