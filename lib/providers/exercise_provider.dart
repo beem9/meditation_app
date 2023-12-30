@@ -9,6 +9,7 @@ class ExerciseProvider extends ChangeNotifier {
 
   Future<void> getExerciseList() async {
     exerciseList = await _exerciseService.getExercisesListApi();
+
     notifyListeners();
   }
 }
