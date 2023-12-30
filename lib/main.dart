@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/pages/home_page.dart';
+import 'package:meditation_app/pages/personal_tips_page.dart';
 import 'package:meditation_app/pages/signin.dart';
 import 'package:meditation_app/pages/signup.dart';
 import 'package:meditation_app/pages/tips_page.dart';
@@ -43,6 +44,11 @@ class MyApp extends StatelessWidget {
       path: "/home",
       name: "home",
       builder: (context, state) => MyHomePage(),
+    ),
+    GoRoute(
+      path: "/ptips",
+      name: "ptips",
+      builder: (context, state) => PersonalTipsScreen(),
     ),
     GoRoute(
       path: "/tips",

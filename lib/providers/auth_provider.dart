@@ -18,7 +18,7 @@ class AuthProvider extends ChangeNotifier {
         exp: decodedToken['exp'],
         finishedExercises: decodedToken['finishedExercises'],
         iat: decodedToken['iat']);
-    print(user.imagePath);
+    //print(user.imagePath);
 
     return user;
   }
@@ -48,10 +48,12 @@ class AuthProvider extends ChangeNotifier {
 
   //readTokenFromStorage
 
-  String getUsernameFromToken() {
+  Future<String> getUsernameFromToken() async {
+    SharedPreferences shared = await SharedPreferences.getInstance();
+    token = shared.getString('token') ?? "";
+
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
 
-    // Assuming your username is stored in the 'username' claim
     String username = decodedToken['username'];
 
     return username;

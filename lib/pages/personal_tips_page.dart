@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:meditation_app/widgets/dialog_tip.dart';
 import 'package:provider/provider.dart';
 
-class TipsScreen extends StatefulWidget {
-  TipsScreen({super.key});
+class PersonalTipsScreen extends StatefulWidget {
+  PersonalTipsScreen({super.key});
 
   @override
-  State<TipsScreen> createState() => _TipsScreenState();
+  State<PersonalTipsScreen> createState() => _PersonalTipsScreenState();
 }
 
-class _TipsScreenState extends State<TipsScreen> {
+class _PersonalTipsScreenState extends State<PersonalTipsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +18,6 @@ class _TipsScreenState extends State<TipsScreen> {
         centerTitle: true,
         title: Text("Tips"),
         actions: [
-          IconButton(
-              onPressed: () {
-                GoRouter.of(context).pushNamed('ptips');
-              },
-              icon: Icon(Icons.person)),
           IconButton(
             onPressed: () {
               showDialog(
@@ -38,21 +32,21 @@ class _TipsScreenState extends State<TipsScreen> {
         ],
       ),
       body: FutureBuilder(
-        future: context.read<TipProvider>().tipList(),
-        builder: (context, snapshot) {
+        future: context.read<TipProvider>().personalTipList(),
+        builder: (context, AsyncSnapshot snapshot) {
           return Consumer<TipProvider>(
             builder: (context, value, child) => ListView.builder(
-              itemCount: value.tipsList.length,
+              itemCount: value.personalTipsList.length,
               itemBuilder: (context, index) {
                 final upvotesCount = context
                         .watch<TipProvider>()
-                        .tipsList[index]
+                        .personalTipsList[index]
                         .upvotes
                         ?.length ??
                     0;
                 final downvotesCount = context
                         .watch<TipProvider>()
-                        .tipsList[index]
+                        .personalTipsList[index]
                         .downvotes
                         ?.length ??
                     0;
@@ -69,7 +63,7 @@ class _TipsScreenState extends State<TipsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                value.tipsList[index].text.toString(),
+                                value.personalTipsList[index].text.toString(),
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
@@ -77,7 +71,7 @@ class _TipsScreenState extends State<TipsScreen> {
                               ),
                               SizedBox(height: 8.0),
                               Text(
-                                value.tipsList[index].author.toString(),
+                                value.personalTipsList[index].author.toString(),
                                 style: TextStyle(fontSize: 14.0),
                               ),
                             ],
@@ -92,10 +86,11 @@ class _TipsScreenState extends State<TipsScreen> {
                                   icon: Icon(Icons.arrow_upward),
                                   onPressed: () {
                                     // Upvote logic
+                                    context.read<TipProvider>().upVouteTip(
+                                        value.personalTipsList[index].id!);
                                     context
                                         .read<TipProvider>()
-                                        .upVouteTip(value.tipsList[index].id!);
-                                    context.read<TipProvider>().tipList();
+                                        .personalTipList();
                                   },
                                 ),
                                 Text(
@@ -109,10 +104,11 @@ class _TipsScreenState extends State<TipsScreen> {
                                 IconButton(
                                   icon: Icon(Icons.arrow_downward),
                                   onPressed: () {
+                                    context.read<TipProvider>().downVoteTip(
+                                        value.personalTipsList[index].id!);
                                     context
                                         .read<TipProvider>()
-                                        .downVoteTip(value.tipsList[index].id!);
-                                    context.read<TipProvider>().tipList();
+                                        .personalTipList();
                                     // Downvote logic
                                   },
                                 ),
@@ -123,7 +119,7 @@ class _TipsScreenState extends State<TipsScreen> {
                               onPressed: () {
                                 setState(() {
                                   context.read<TipProvider>().deleteTip(
-                                        value.tipsList[index].id!,
+                                        value.personalTipsList[index].id!,
                                       );
                                 });
                               },
