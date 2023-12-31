@@ -14,6 +14,7 @@ import 'package:meditation_app/providers/exercise_provider.dart';
 import 'package:meditation_app/providers/meditation_provider.dart';
 import 'package:meditation_app/providers/music_provider.dart';
 import 'package:meditation_app/providers/tips_provider.dart';
+import 'package:meditation_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -33,6 +34,9 @@ void main() {
     ChangeNotifierProvider(
       create: (context) => MeditationProvider(),
     ),
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+    ),
   ], child: MyApp()));
 }
 
@@ -47,10 +51,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: Provider.of<ThemeProvider>(context).themeData,
       routerConfig: _router,
     );
   }

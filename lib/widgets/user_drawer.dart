@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meditation_app/theme/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class UserDrawer extends StatelessWidget {
   const UserDrawer({
@@ -34,6 +36,16 @@ class UserDrawer extends StatelessWidget {
               // Handle item 2 tap
             },
           ),
+
+          SizedBox(
+            height: 480,
+          ),
+          IconButton(
+              onPressed: () {
+                Provider.of<ThemeProvider>(context, listen: false)
+                    .toggleTheme();
+              },
+              icon: Icon(Icons.dark_mode))
           // Add more drawer items as needed
         ],
       ),
