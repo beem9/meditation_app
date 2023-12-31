@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:meditation_app/models/user.dart';
+import 'package:meditation_app/providers/auth_provider.dart';
 import 'package:meditation_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class UserDrawer extends StatelessWidget {
   const UserDrawer({
-    super.key,
+    Key? key,
     required this.username,
-  });
+  }) : super(key: key);
 
   final String username;
 
@@ -27,16 +29,17 @@ class UserDrawer extends StatelessWidget {
           ListTile(
             title: Text('Item 1'),
             onTap: () {
+              context.read<AuthProvider>().updateUser(
+                  user: User(username: "humoud12", password: "123"));
               // Handle item 1 tap
             },
           ),
           ListTile(
-            title: Text('Item 2'),
+            title: Text('Edit Account'),
             onTap: () {
-              // Handle item 2 tap
+              _showEditAccountDialog(context);
             },
           ),
-
           SizedBox(
             height: 480,
           ),
@@ -49,6 +52,55 @@ class UserDrawer extends StatelessWidget {
           // Add more drawer items as needed
         ],
       ),
+    );
+  }
+
+  void _showEditAccountDialog(BuildContext context) {
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Edit Account'),
+          content: Column(
+            children: [
+              TextField(
+                controller: usernameController,
+                decoration: InputDecoration(labelText: 'New Username'),
+              ),
+              TextField(
+                controller: passwordController,
+                decoration: InputDecoration(labelText: 'New Password'),
+                obscureText: true,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Update the user with the new information
+
+                context.read<AuthProvider>().updateUser(
+                    user: User(
+                        username: usernameController.text,
+                        password: passwordController.text));
+
+                // Close the dialog
+                Navigator.pop(context);
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

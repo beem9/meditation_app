@@ -53,9 +53,26 @@ class AuthService {
       throw e.toString();
     }
   }
+
+  Future<String> updateUserApi({required User user}) async {
+    try {
+      if (user.username.isNotEmpty && user.password!.isNotEmpty) {
+        print("before res");
+        print(user.toJson());
+        final Response response = await ApiClient.put("/update",
+            data: {"username": user.username, "password": user.password});
+        print("before aftesr");
+
+        print(response.data);
+        Token tokenModle = Token.fromJson(response.data);
+        return response.data;
+      }
+      return "";
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
-
-
 
 ///username : "Ali"
 ///
