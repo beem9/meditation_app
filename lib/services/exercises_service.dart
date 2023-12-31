@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:meditation_app/models/exercises.dart';
 import 'package:meditation_app/services/client.dart';
 
@@ -13,6 +14,15 @@ class ExercisesService {
         return listOfExersices;
       }
       return [];
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  finishExerciseApi(int id) async {
+    try {
+      final Response response = await ApiClient.post("/exercises/$id");
+      return response.data;
     } catch (e) {
       throw e.toString();
     }

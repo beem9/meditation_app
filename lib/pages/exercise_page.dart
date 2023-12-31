@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/models/exercises.dart';
-import 'package:meditation_app/pages/vid_test.dart';
 import 'package:meditation_app/providers/exercise_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 class ExerciseScreen extends StatefulWidget {
   ExerciseScreen({super.key});
@@ -53,7 +51,14 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(exerciseList[index].title.toString()),
-                        SizedBox(height: 8),
+                        SizedBox(height: 15),
+                        IconButton(
+                            onPressed: () {
+                              ExerciseProvider()
+                                  .finishExercise(exerciseList[index + 1].id!);
+                              setState(() {});
+                            },
+                            icon: Icon(Icons.check))
                       ],
                     ),
                   ),
