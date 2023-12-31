@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:meditation_app/models/user.dart';
 import 'package:meditation_app/services/auth_service.dart';
-import 'package:meditation_app/services/client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -70,9 +69,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> updateUser({required User user}) async {
-    print("before auth");
     authService.updateUserApi(user: user);
-    print("after auth");
 
     /// token to be saved in local storage
     notifyListeners();

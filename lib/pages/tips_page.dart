@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_app/models/tips.dart';
 import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:meditation_app/widgets/dialog_tip.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,8 @@ class TipsScreen extends StatefulWidget {
 }
 
 class _TipsScreenState extends State<TipsScreen> {
+  bool _reverseOrder = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +23,11 @@ class _TipsScreenState extends State<TipsScreen> {
         title: Text("Tips"),
         actions: [
           IconButton(
-              onPressed: () {
-                GoRouter.of(context).pushNamed('ptips');
-              },
-              icon: Icon(Icons.person)),
+            onPressed: () {
+              GoRouter.of(context).pushNamed('ptips');
+            },
+            icon: Icon(Icons.person),
+          ),
           IconButton(
             onPressed: () {
               showDialog(
@@ -41,111 +45,105 @@ class _TipsScreenState extends State<TipsScreen> {
         future: context.read<TipProvider>().tipList(),
         builder: (context, snapshot) {
           return Consumer<TipProvider>(
-            builder: (context, value, child) => ListView.builder(
-              itemCount: value.tipsList.length,
-              itemBuilder: (context, index) {
-                final upvotesCount = context
-                        .watch<TipProvider>()
-                        .tipsList[index]
-                        .upvotes
-                        ?.length ??
-                    0;
-                final downvotesCount = context
-                        .watch<TipProvider>()
-                        .tipsList[index]
-                        .downvotes
-                        ?.length ??
-                    0;
-                dynamic totalVotes = upvotesCount - downvotesCount;
+            builder: (context, value, child) {
+              List<Tips> tipsList = value.tipsList.toList();
+              if (_reverseOrder) {
+                tipsList = tipsList.reversed.toList();
+              }
 
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                value.tipsList[index].text.toString(),
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 8.0),
-                              Text(
-                                value.tipsList[index].author.toString(),
-                                style: TextStyle(fontSize: 14.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
+              return ListView.builder(
+                itemCount: tipsList.length,
+                itemBuilder: (context, index) {
+                  final upvotesCount = tipsList[index].upvotes?.length ?? 0;
+                  final downvotesCount = tipsList[index].downvotes?.length ?? 0;
+                  dynamic totalVotes = upvotesCount - downvotesCount;
+
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                IconButton(
-                                  icon: Icon(Icons.arrow_upward),
-                                  onPressed: () {
-                                    // Upvote logic
-                                    context
-                                        .read<TipProvider>()
-                                        .upVouteTip(value.tipsList[index].id!);
-                                    context.read<TipProvider>().tipList();
-                                  },
-                                ),
                                 Text(
-                                  "${totalVotes}"
-
-                                  //            value.tipsList[index].upvotes.length.toString(),
-
-                                  , // Replace this with the actual vote count
-                                  style: TextStyle(fontSize: 16),
+                                  tipsList[index].text.toString(),
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                IconButton(
-                                  icon: Icon(Icons.arrow_downward),
-                                  onPressed: () {
-                                    context
-                                        .read<TipProvider>()
-                                        .downVoteTip(value.tipsList[index].id!);
-                                    context.read<TipProvider>().tipList();
-                                    // Downvote logic
-                                  },
+                                SizedBox(height: 8.0),
+                                Text(
+                                  tipsList[index].author.toString(),
+                                  style: TextStyle(fontSize: 14.0),
                                 ),
                               ],
                             ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                setState(() {
-                                  context.read<TipProvider>().deleteTip(
-                                        value.tipsList[index].id!,
-                                      );
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.arrow_upward),
+                                    onPressed: () {
+                                      // Upvote logic
+                                      context
+                                          .read<TipProvider>()
+                                          .upVouteTip(tipsList[index].id!);
+                                      context.read<TipProvider>().tipList();
+                                    },
+                                  ),
+                                  Text(
+                                    "${totalVotes}",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.arrow_downward),
+                                    onPressed: () {
+                                      context
+                                          .read<TipProvider>()
+                                          .downVoteTip(tipsList[index].id!);
+                                      context.read<TipProvider>().tipList();
+                                      // Downvote logic
+                                    },
+                                  ),
+                                ],
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  setState(() {
+                                    context.read<TipProvider>().deleteTip(
+                                          tipsList[index].id!,
+                                        );
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              );
+            },
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _reverseOrder = !_reverseOrder;
+          });
+        },
+        child: Icon(Icons.sort),
+      ),
     );
   }
-
-  // likes(int ups, int down, index) {
-  //   int like = TipProvider().tipsList[index].upvotes!.length;
-  //   int dislikes = TipProvider().tipsList[index].downvotes!.length;
-  //   int total = like - dislikes;
-  //   return total;
-  // }
 }
