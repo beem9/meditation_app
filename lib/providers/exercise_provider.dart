@@ -7,9 +7,12 @@ class ExerciseProvider extends ChangeNotifier {
 
   final ExercisesService _exerciseService = ExercisesService();
 
-  Future<void> getExerciseList() async {
+  Future<List<Exercises>> getExerciseList() async {
+    print("teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeest");
     exerciseList = await _exerciseService.getExercisesListApi();
-
+    print(exerciseList);
+    print("test2222222222222222222222");
     notifyListeners();
+    return exerciseList;
   }
 }

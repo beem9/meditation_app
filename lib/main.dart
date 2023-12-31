@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/pages/exercise_page.dart';
 import 'package:meditation_app/pages/home_page.dart';
+import 'package:meditation_app/pages/meditation_page.dart';
+import 'package:meditation_app/pages/music_page.dart';
 import 'package:meditation_app/pages/personal_tips_page.dart';
 import 'package:meditation_app/pages/signin.dart';
 import 'package:meditation_app/pages/signup.dart';
 import 'package:meditation_app/pages/tips_page.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
 import 'package:meditation_app/providers/exercise_provider.dart';
+import 'package:meditation_app/providers/meditation_provider.dart';
+import 'package:meditation_app/providers/music_provider.dart';
 import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +25,12 @@ void main() {
     ),
     ChangeNotifierProvider(
       create: (context) => ExerciseProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => MusicProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => MeditationProvider(),
     ),
   ], child: MyApp()));
 }
@@ -79,6 +89,16 @@ class MyApp extends StatelessWidget {
       path: "/exer",
       name: "exer",
       builder: (context, state) => ExerciseScreen(),
+    ),
+    GoRoute(
+      path: "/music",
+      name: "music",
+      builder: (context, state) => MusicScreen(),
+    ),
+    GoRoute(
+      path: "/med",
+      name: "med",
+      builder: (context, state) => MeditationScreen(),
     ),
   ]);
 }

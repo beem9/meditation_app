@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/providers/exercise_provider.dart';
+import 'package:meditation_app/providers/music_provider.dart';
 import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:meditation_app/widgets/dialog_tip.dart';
 import 'package:provider/provider.dart';
 
-class ExerciseScreen extends StatefulWidget {
-  ExerciseScreen({super.key});
+class MusicScreen extends StatefulWidget {
+  MusicScreen({super.key});
 
   @override
-  State<ExerciseScreen> createState() => _ExerciseScreenState();
+  State<MusicScreen> createState() => _MusicScreenState();
 }
 
-class _ExerciseScreenState extends State<ExerciseScreen> {
+class _MusicScreenState extends State<MusicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Exercises"),
+        title: Text("Music"),
         actions: [
           IconButton(
             onPressed: () {
@@ -34,25 +35,25 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         ],
       ),
       body: FutureBuilder(
-        future: context.read<ExerciseProvider>().getExerciseList(),
+        future: context.read<MusicProvider>().getMusicList(),
         builder: (context, snapshot) {
-          return Consumer<ExerciseProvider>(
+          return Consumer<MusicProvider>(
             builder: (context, value, child) => ListView.builder(
-              itemCount: value.exerciseList.length,
+              itemCount: value.musicList.length,
               itemBuilder: (context, index) {
                 return Card(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(context
-                          .read<ExerciseProvider>()
-                          .exerciseList[index]
+                          .read<MusicProvider>()
+                          .musicList[index]
                           .title
                           .toString()),
                       Column(children: [
                         Text(context
-                            .read<ExerciseProvider>()
-                            .exerciseList[index]
+                            .read<MusicProvider>()
+                            .musicList[index]
                             .file
                             .toString())
                       ]),

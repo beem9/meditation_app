@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/models/user.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
+import 'package:meditation_app/services/auth_service.dart';
 import 'package:meditation_app/widgets/grid.dart';
 import 'package:meditation_app/widgets/user_drawer.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.read<AuthProvider>().logOut();
+                GoRouter.of(context).goNamed("signin");
+              },
+              icon: Icon(Icons.logout))
+        ],
         title: Text('Profile Page'),
       ),
       drawer: UserDrawer(
@@ -40,9 +49,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 GoRouter.of(context).pushNamed('exer');
               }),
           GridItem(
-              image: "assets/images/music.png", title: "Music", onTap: () {}),
+              image: "assets/images/music.png",
+              title: "Music",
+              onTap: () {
+                GoRouter.of(context).pushNamed("music");
+              }),
           GridItem(
-              image: "assets/images/med.png", title: "Meditation", onTap: () {})
+              image: "assets/images/med.png",
+              title: "Meditation",
+              onTap: () {
+                GoRouter.of(context).pushNamed("med");
+              })
         ],
       ),
     );
