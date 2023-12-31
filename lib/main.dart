@@ -8,6 +8,7 @@ import 'package:meditation_app/pages/personal_tips_page.dart';
 import 'package:meditation_app/pages/signin.dart';
 import 'package:meditation_app/pages/signup.dart';
 import 'package:meditation_app/pages/tips_page.dart';
+import 'package:meditation_app/pages/vid_test.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
 import 'package:meditation_app/providers/exercise_provider.dart';
 import 'package:meditation_app/providers/meditation_provider.dart';
@@ -99,6 +100,11 @@ class MyApp extends StatelessWidget {
       path: "/med",
       name: "med",
       builder: (context, state) => MeditationScreen(),
+    ),
+    GoRoute(
+      path: "/video",
+      name: "video",
+      builder: (context, state) => VideoPage(link: state.extra as String),
     ),
   ]);
 }

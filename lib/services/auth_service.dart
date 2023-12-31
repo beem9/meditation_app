@@ -31,7 +31,9 @@ class AuthService {
     try {
       final Response response =
           await ApiClient.post("/signin", data: user.toJson());
+
       Token tokenModel = Token.fromJson(response.data);
+      print(tokenModel.token);
       return tokenModel.token;
     } catch (e) {
       throw e.toString();

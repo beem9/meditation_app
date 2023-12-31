@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:meditation_app/providers/exercise_provider.dart';
+
 import 'package:meditation_app/providers/meditation_provider.dart';
-import 'package:meditation_app/providers/music_provider.dart';
-import 'package:meditation_app/providers/tips_provider.dart';
-import 'package:meditation_app/services/meditation_service.dart';
+
 import 'package:meditation_app/widgets/dialog_tip.dart';
 import 'package:provider/provider.dart';
 

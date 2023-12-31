@@ -1,4 +1,3 @@
-import 'package:meditation_app/models/exercises.dart';
 import 'package:meditation_app/models/meditation.dart';
 import 'package:meditation_app/services/client.dart';
 

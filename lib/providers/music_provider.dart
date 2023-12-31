@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meditation_app/models/exercises.dart';
+
 import 'package:meditation_app/models/music.dart';
-import 'package:meditation_app/services/exercises_service.dart';
+
 import 'package:meditation_app/services/music_service.dart';
 
 class MusicProvider extends ChangeNotifier {

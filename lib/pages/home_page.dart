@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/models/user.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
-import 'package:meditation_app/services/auth_service.dart';
 import 'package:meditation_app/widgets/grid.dart';
 import 'package:meditation_app/widgets/user_drawer.dart';
 import 'package:provider/provider.dart';

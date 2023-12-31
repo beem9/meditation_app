@@ -16,7 +16,7 @@ class TipProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Tips>> personalTipList() async {
+  Future<void> personalTipList() async {
     personalTipsList = await _tipService.getTipsListApi();
 
     String localUsername = await AuthProvider().getUsernameFromToken();
@@ -28,7 +28,6 @@ class TipProvider extends ChangeNotifier {
         )
         .toList();
     notifyListeners();
-    return personalTipsList;
   }
 
   Future<void> createNewTip(String tip) async {
