@@ -4,7 +4,7 @@ import 'package:meditation_app/models/tips.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
 
 import 'package:meditation_app/services/tips_service.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TipProvider extends ChangeNotifier {
   List<Tips> tipsList = [];
@@ -36,9 +36,13 @@ class TipProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void shareTip(dynamic tip) {
-    if (tip != null && tip.text != null) {
-      Share.share(tip.toString()); // Share the text of the tip
+  void shareTip(String tip) {
+    try {
+      if (tip != null && tip != null) {
+        Share.share(tip); // Share the text of the tip
+      }
+    } catch (e) {
+      print("Error sharing tip: $e");
     }
   }
 
