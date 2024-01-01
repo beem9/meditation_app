@@ -144,22 +144,31 @@ class _TipsScreenState extends State<TipsScreen> {
                                         ),
                                       ],
                                     ),
-                                    IconButton(
-                                      icon: Icon(Icons.share),
-                                      onPressed: () {
-                                        context.read<TipProvider>().shareTip(
-                                            tipsList[index].text.toString());
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.delete),
-                                      onPressed: () {
-                                        setState(() {
-                                          context.read<TipProvider>().deleteTip(
-                                                tipsList[index].id!,
-                                              );
-                                        });
-                                      },
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.share),
+                                          onPressed: () {
+                                            context
+                                                .read<TipProvider>()
+                                                .shareTip(tipsList[index]
+                                                    .text
+                                                    .toString());
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.delete),
+                                          onPressed: () {
+                                            setState(() {
+                                              context
+                                                  .read<TipProvider>()
+                                                  .deleteTip(
+                                                    tipsList[index].id!,
+                                                  );
+                                            });
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
