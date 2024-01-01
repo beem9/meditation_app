@@ -38,7 +38,7 @@ class TipProvider extends ChangeNotifier {
 
   void shareTip(String tip) {
     try {
-      if (tip != null && tip != null) {
+      if (tip != null) {
         Share.share(tip); // Share the text of the tip
       }
     } catch (e) {

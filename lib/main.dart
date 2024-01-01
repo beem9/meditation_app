@@ -106,7 +106,8 @@ class MyApp extends StatelessWidget {
     GoRoute(
       path: "/video",
       name: "video",
-      builder: (context, state) => VideoPage(link: state.extra as String),
+      builder: (context, state) =>
+          VideoPage(combinedParams: state.extra as String),
     ),
   ]);
 }

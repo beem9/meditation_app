@@ -48,9 +48,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 visible: visibilityController,
                 child: InkWell(
                   onTap: () {
-                    GoRouter.of(context).pushNamed('video',
-                        extra:
-                            'https://coded-meditation.eapi.joincoded.com/media/yoga/tree_pose.mp4');
+                    String combinedParams =
+                        'https://coded-meditation.eapi.joincoded.com/media/yoga/tree_pose.mp4,${exerciseList[index].title}';
+                    GoRouter.of(context)
+                        .pushNamed('video', extra: combinedParams);
                   },
                   child: Card(
                     child: Column(
