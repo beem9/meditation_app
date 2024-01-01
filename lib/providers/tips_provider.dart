@@ -8,11 +8,30 @@ import 'package:meditation_app/services/tips_service.dart';
 class TipProvider extends ChangeNotifier {
   List<Tips> tipsList = [];
   List<Tips> personalTipsList = [];
+  List<Tips> _filteredTips = [];
 
   final Tipservice _tipService = Tipservice();
 
   Future<void> tipList() async {
     tipsList = await _tipService.getTipsListApi();
+    notifyListeners();
+  }
+
+  // ... existing methods ...
+
+  List<Tips> get filteredTips => _filteredTips;
+
+  void filterTips(String query) {
+    _filteredTips.clear();
+    if (query.isEmpty) {
+      // If the search query is empty, show all tips
+      _filteredTips.addAll(tipsList);
+    } else {
+      // Filter tips based on the search query
+      _filteredTips.addAll(tipsList.where((tip) =>
+          tip.text!.toLowerCase().contains(query.toLowerCase()) ||
+          tip.author!.toLowerCase().contains(query.toLowerCase())));
+    }
     notifyListeners();
   }
 
