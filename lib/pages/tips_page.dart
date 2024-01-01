@@ -145,6 +145,13 @@ class _TipsScreenState extends State<TipsScreen> {
                                       ],
                                     ),
                                     IconButton(
+                                      icon: Icon(Icons.share),
+                                      onPressed: () {
+                                        context.read<TipProvider>().shareTip(
+                                            tipsList[index].text.toString());
+                                      },
+                                    ),
+                                    IconButton(
                                       icon: Icon(Icons.delete),
                                       onPressed: () {
                                         setState(() {

@@ -4,6 +4,7 @@ import 'package:meditation_app/models/tips.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
 
 import 'package:meditation_app/services/tips_service.dart';
+import 'package:share/share.dart';
 
 class TipProvider extends ChangeNotifier {
   List<Tips> tipsList = [];
@@ -33,6 +34,12 @@ class TipProvider extends ChangeNotifier {
           tip.author!.toLowerCase().contains(query.toLowerCase())));
     }
     notifyListeners();
+  }
+
+  void shareTip(dynamic tip) {
+    if (tip != null && tip.text != null) {
+      Share.share(tip.toString()); // Share the text of the tip
+    }
   }
 
   Future<void> personalTipList() async {
