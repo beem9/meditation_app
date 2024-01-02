@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_app/models/music.dart';
 import 'package:meditation_app/providers/music_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,14 @@ class _MusicScreenState extends State<MusicScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Music"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.favorite),
+            onPressed: () {
+              _showFavoritesDialog(context);
+            },
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: context.read<MusicProvider>().getMusicList(),
@@ -33,10 +42,12 @@ class _MusicScreenState extends State<MusicScreen> {
             return ListView.builder(
               itemCount: value.musicList.length,
               itemBuilder: (context, index) {
+                final musicItem = value.musicList[index];
+
                 return InkWell(
                   onTap: () {
                     String combinedParams =
-                        '${value.musicList[index].file},${value.musicList[index].title}';
+                        '${musicItem.file},${musicItem.title}';
                     GoRouter.of(context)
                         .pushNamed('video', extra: combinedParams);
                   },
@@ -44,7 +55,25 @@ class _MusicScreenState extends State<MusicScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(value.musicList[index].title.toString()),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(musicItem.title.toString()),
+                            IconButton(
+                              icon: Icon(
+                                musicItem.isFavorite!
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                              ),
+                              onPressed: () {
+                                // Toggle favorite status
+                                context
+                                    .read<MusicProvider>()
+                                    .toggleFavorite(musicItem);
+                              },
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 15),
                       ],
                     ),
@@ -55,6 +84,35 @@ class _MusicScreenState extends State<MusicScreen> {
           });
         },
       ),
+    );
+  }
+
+  void _showFavoritesDialog(BuildContext context) {
+    final List<Music> favoritedTracks =
+        context.read<MusicProvider>().getFavoritedTracks();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Favorite Tracks'),
+          content: Column(
+            children: favoritedTracks
+                .map((musicItem) => ListTile(
+                      title: Text(musicItem.title.toString()),
+                    ))
+                .toList(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

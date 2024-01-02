@@ -13,4 +13,14 @@ class MusicProvider extends ChangeNotifier {
     musicList = await _musicService.getMusicApi();
     notifyListeners();
   }
+
+  void toggleFavorite(Music music) {
+    music.isFavorite = !music.isFavorite!;
+    notifyListeners();
+  }
+
+  // New method to get the list of favorited tracks
+  List<Music> getFavoritedTracks() {
+    return musicList.where((music) => music.isFavorite!).toList();
+  }
 }
