@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/providers/meditation_provider.dart';
-
-import 'package:meditation_app/providers/music_provider.dart';
 import 'package:provider/provider.dart';
 
 class MeditationScreen extends StatefulWidget {
