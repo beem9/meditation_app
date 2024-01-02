@@ -21,28 +21,66 @@ class _VideoPageState extends State<VideoPage> {
   @override
   void initState() {
     super.initState();
+    // widget.combinedParams['title'];
     final params = widget.combinedParams.split(',');
-    link = params[0]; // Extract the video link
+    link = getLastMediaLink(params[0]); // Extract the video link
+    print(link);
     title = params[1];
-    _initializeVideoPlayer();
+
+    _initializeVideoPlayer(link);
   }
 
-  Future<void> _initializeVideoPlayer() async {
-    _videoPlayerController = VideoPlayerController.networkUrl(
-      Uri.parse(link),
-    );
+  String getLastMediaLink(String input) {
+    List<String> links = input.split("http");
+    String? lastMp4Link;
+    String? lastMp3Link;
 
-    await _videoPlayerController.initialize();
+    for (int i = links.length - 1; i >= 0; i--) {
+      String trimmedLink = links[i].trim();
+      if (trimmedLink.endsWith(".mp4")) {
+        lastMp4Link = "https$trimmedLink";
+        break;
+      } else if (trimmedLink.endsWith(".mp3")) {
+        lastMp3Link = "https$trimmedLink";
+        break;
+      }
+    }
 
-    setState(() {
-      _chewieController = ChewieController(
-        videoPlayerController: _videoPlayerController,
-        autoPlay: false,
-        looping: true,
-        aspectRatio: 16 / 9,
-      );
-      _isLoading = false;
-    });
+    print(lastMp4Link);
+    print(lastMp3Link);
+
+    if (lastMp4Link != null) {
+      return lastMp4Link;
+    } else if (lastMp3Link != null) {
+      return lastMp3Link;
+    } else {
+      return "No mp4 or mp3 link found";
+    }
+  }
+
+  Future<void> _initializeVideoPlayer(String link) async {
+    try {
+      _videoPlayerController =
+          VideoPlayerController.networkUrl(Uri.parse(link));
+
+      await _videoPlayerController.initialize();
+
+      setState(() {
+        _chewieController = ChewieController(
+          videoPlayerController: _videoPlayerController,
+          autoPlay: false,
+          looping: true,
+          aspectRatio: 16 / 9,
+        );
+        _isLoading = false;
+      });
+    } catch (e) {
+      print("Error initializing video player: $e");
+      // Handle error, show error message, etc.
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override

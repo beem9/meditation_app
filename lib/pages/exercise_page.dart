@@ -39,40 +39,47 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           final exerciseList = snapshot.data
               as List<Exercises>; // Assuming Exercise is your data model
 
-          return ListView.builder(
-            itemCount: exerciseList.length,
-            itemBuilder: (context, index) {
-              bool visibilityController = exerciseList[index].finished!;
+          return Consumer<ExerciseProvider>(builder: (context, value, child) {
+            return ListView.builder(
+              itemCount: exerciseList.length,
+              itemBuilder: (context, index) {
+                bool visibilityController = exerciseList[index].finished!;
 
-              return Visibility(
-                visible: visibilityController,
-                child: InkWell(
-                  onTap: () {
-                    String combinedParams =
-                        'https://coded-meditation.eapi.joincoded.com/media/yoga/tree_pose.mp4,${exerciseList[index].title}';
-                    GoRouter.of(context)
-                        .pushNamed('video', extra: combinedParams);
-                  },
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(exerciseList[index].title.toString()),
-                        SizedBox(height: 15),
-                        IconButton(
-                            onPressed: () {
-                              ExerciseProvider()
-                                  .finishExercise(exerciseList[index + 1].id!);
-                              setState(() {});
-                            },
-                            icon: Icon(Icons.check))
-                      ],
+                return Visibility(
+                  visible: visibilityController,
+                  child: InkWell(
+                    onTap: () {
+                      // Map combinedPMap = {
+                      //   "title" : "",
+                      //   "file": ""
+                      // };
+
+                      String combinedParams =
+                          '${value.exerciseList[index].file},${value.exerciseList[index].title}';
+                      GoRouter.of(context)
+                          .pushNamed('video', extra: combinedParams);
+                    },
+                    child: Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(exerciseList[index].title.toString()),
+                          SizedBox(height: 15),
+                          IconButton(
+                              onPressed: () {
+                                ExerciseProvider().finishExercise(
+                                    exerciseList[index + 1].id!);
+                                setState(() {});
+                              },
+                              icon: Icon(Icons.check))
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          );
+                );
+              },
+            );
+          });
         },
       ),
     );

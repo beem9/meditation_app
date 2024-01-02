@@ -36,7 +36,7 @@ class _MeditationScreenState extends State<MeditationScreen> {
                 return InkWell(
                   onTap: () {
                     String combinedParams =
-                        'https://coded-meditation.eapi.joincoded.com/media/meditation/driving.mp3,${value.meditataionList[index].title}';
+                        '${value.meditataionList[index].file},${value.meditataionList[index].title}';
                     GoRouter.of(context)
                         .pushNamed('video', extra: combinedParams);
                   },
