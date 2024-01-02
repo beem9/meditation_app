@@ -46,9 +46,6 @@ class _VideoPageState extends State<VideoPage> {
       }
     }
 
-    print(lastMp4Link);
-    print(lastMp3Link);
-
     if (lastMp4Link != null) {
       return lastMp4Link;
     } else if (lastMp3Link != null) {

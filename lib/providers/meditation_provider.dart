@@ -5,12 +5,12 @@ import 'package:meditation_app/models/meditation.dart';
 import 'package:meditation_app/services/meditation_service.dart';
 
 class MeditationProvider extends ChangeNotifier {
-  List<Meditation> meditataionList = [];
+  List<Meditation> meditationList = [];
 
   final MeditationService _meditaationService = MeditationService();
 
   Future<void> getMeditationList() async {
-    meditataionList = await _meditaationService.getMeditationListApi();
+    meditationList = await _meditaationService.getMeditationListApi();
     notifyListeners();
   }
 }

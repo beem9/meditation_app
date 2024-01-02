@@ -23,7 +23,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Exercises"),
+        title: Text("Yoga Videos"),
       ),
       body: FutureBuilder(
         future: context.read<ExerciseProvider>().getExerciseList(),
@@ -49,30 +49,36 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   visible: visibilityController,
                   child: InkWell(
                     onTap: () {
-                      // Map combinedPMap = {
-                      //   "title" : "",
-                      //   "file": ""
-                      // };
-
                       String combinedParams =
                           '${value.exerciseList[index].file},${value.exerciseList[index].title}';
                       GoRouter.of(context)
                           .pushNamed('video', extra: combinedParams);
                     },
                     child: Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(exerciseList[index].title.toString()),
-                          SizedBox(height: 15),
-                          IconButton(
-                              onPressed: () {
-                                ExerciseProvider().finishExercise(
-                                    exerciseList[index + 1].id!);
-                                setState(() {});
-                              },
-                              icon: Icon(Icons.check))
-                        ],
+                      elevation: 3,
+                      margin: EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(15),
+                        title: Text(
+                          exerciseList[index].title.toString(),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        trailing: Checkbox(
+                          value: exerciseList[index].finished!,
+                          onChanged: (newValue) {
+                            ExerciseProvider().finishExercise(
+                              exerciseList[index + 1].id!,
+                            );
+                            setState(() {});
+                          },
+                          activeColor: Colors.green,
+                        ),
                       ),
                     ),
                   ),

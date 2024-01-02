@@ -29,30 +29,42 @@ class _MeditationScreenState extends State<MeditationScreen> {
             return const Center(child: Text('Error loading data'));
           }
 
-          return Consumer<MeditationProvider>(builder: (context, value, child) {
-            return ListView.builder(
-              itemCount: value.meditataionList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    String combinedParams =
-                        '${value.meditataionList[index].file},${value.meditataionList[index].title}';
-                    GoRouter.of(context)
-                        .pushNamed('video', extra: combinedParams);
-                  },
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(value.meditataionList[index].title.toString()),
-                        const SizedBox(height: 15),
-                      ],
+          return Consumer<MeditationProvider>(
+            builder: (context, value, child) {
+              return ListView.builder(
+                itemCount: value.meditationList.length,
+                itemBuilder: (context, index) {
+                  final meditationItem = value.meditationList[index];
+
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        meditationItem.title.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.play_arrow),
+                        onPressed: () {
+                          String combinedParams =
+                              '${meditationItem.file},${meditationItem.title}';
+                          GoRouter.of(context)
+                              .pushNamed('video', extra: combinedParams);
+                        },
+                      ),
+                      onTap: () {
+                        String combinedParams =
+                            '${meditationItem.file},${meditationItem.title}';
+                        GoRouter.of(context)
+                            .pushNamed('video', extra: combinedParams);
+                      },
                     ),
-                  ),
-                );
-              },
-            );
-          });
+                  );
+                },
+              );
+            },
+          );
         },
       ),
     );

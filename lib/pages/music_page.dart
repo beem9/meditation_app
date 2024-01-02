@@ -44,38 +44,45 @@ class _MusicScreenState extends State<MusicScreen> {
               itemBuilder: (context, index) {
                 final musicItem = value.musicList[index];
 
-                return InkWell(
-                  onTap: () {
-                    String combinedParams =
-                        '${musicItem.file},${musicItem.title}';
-                    GoRouter.of(context)
-                        .pushNamed('video', extra: combinedParams);
-                  },
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                return Card(
+                  child: ListTile(
+                    title: Text(musicItem.title.toString()),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(musicItem.title.toString()),
-                            IconButton(
-                              icon: Icon(
-                                musicItem.isFavorite!
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                              ),
-                              onPressed: () {
-                                // Toggle favorite status
-                                context
-                                    .read<MusicProvider>()
-                                    .toggleFavorite(musicItem);
-                              },
-                            ),
-                          ],
+                        IconButton(
+                          icon: Icon(
+                            Icons.favorite,
+                            color: musicItem.isFavorite!
+                                ? Colors.red
+                                : Colors.grey,
+                          ),
+                          onPressed: () {
+                            context
+                                .read<MusicProvider>()
+                                .toggleFavorite(musicItem);
+                          },
                         ),
-                        const SizedBox(height: 15),
+                        IconButton(
+                          icon: Icon(Icons.play_arrow),
+                          onPressed: () {
+                            String combinedParams =
+                                '${musicItem.file},${musicItem.title}';
+                            GoRouter.of(context)
+                                .pushNamed('video', extra: combinedParams);
+                          },
+                        ),
                       ],
+                    ),
+                    onTap: () {
+                      String combinedParams =
+                          '${musicItem.file},${musicItem.title}';
+                      GoRouter.of(context)
+                          .pushNamed('video', extra: combinedParams);
+                    },
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8.0,
                     ),
                   ),
                 );
